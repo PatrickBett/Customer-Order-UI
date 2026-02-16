@@ -71,23 +71,18 @@ export default function Dashboard() {
     }
   };
 
-  const handleLogout = () => {
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "https://customers-and-orders-api.onrender.com/oidc/logout/";
-    const csrfToken = document.cookie
-      .split("; ")
-      .find((r) => r.startsWith("csrftoken="))
-      ?.split("=")[1];
-    if (csrfToken) {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "csrfmiddlewaretoken";
-      input.value = csrfToken;
-      form.appendChild(input);
+  const handleLogout = async () => {
+    try {
+      // Point this to YOUR custom API endpoint, not /oidc/
+      await api.post("/api/logout/");
+
+      // Redirect to your landing page after successful logout
+      window.location.href = "https://customerorder.netlify.app";
+    } catch (err) {
+      console.error("Logout failed:", err);
+      // If it fails (e.g., session already expired), send them home anyway
+      window.location.href = "https://customerorder.netlify.app";
     }
-    document.body.appendChild(form);
-    form.submit();
   };
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
