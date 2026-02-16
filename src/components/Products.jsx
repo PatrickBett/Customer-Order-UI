@@ -7,7 +7,7 @@ export default function Products({ onAddToCart }) {
 
   useEffect(() => {
     axios
-      .get("https://fakestoreapi.com/products?limit=20")
+      .get("https://fakestoreapi.com/products?limit=22")
       .then((res) => setItems(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
