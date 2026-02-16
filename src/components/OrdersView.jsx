@@ -71,8 +71,8 @@
 //                     {order.items && order.items.length > 0 ? (
 //                       <div className="d-flex flex-wrap gap-1">
 //                         {order.items.map((item, idx) => (
-//                           <span 
-//                             key={idx} 
+//                           <span
+//                             key={idx}
 //                             className="badge bg-info text-dark border shadow-sm"
 //                             title={`Price: $${item.price}`}
 //                           >
@@ -99,7 +99,7 @@
 //           </table>
 //         </div>
 //       )}
-      
+
 //       <div className="mt-3 text-end">
 //         <small className="text-muted">
 //           Showing {orders.length} total orders
@@ -185,7 +185,7 @@ export default function OrdersView({ onBack }) {
                         {order.items.map((item, idx) => (
                           <span
                             key={idx}
-                            className="badge bg-info text-dark border shadow-sm"
+                            className="badge text-dark border shadow-sm"
                             title={`Price: $${item.price}`}
                           >
                             {item.quantity}x {item.product_title}
