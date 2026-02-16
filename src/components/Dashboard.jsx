@@ -12,11 +12,18 @@ export default function Dashboard() {
 
   // Fetch User Data
   useEffect(() => {
-    api
-      .get("/api/current_user/")
-      .then((res) => setUser(res.data))
-      .catch((err) => console.error("Error fetching user:", err))
-      .finally(() => setLoading(false));
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/api/current_user/");
+        setUser(res.data);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
 
   // Add to Cart Logic
