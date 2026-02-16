@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../api";
 import Products from "./Products";
 import CartView from "./CartView";
+import OrdersView from "./OrdersView";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -65,7 +66,7 @@ export default function Dashboard() {
   const handleLogout = () => {
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = "https://customers-and-orders-api.onrender.com/oidc/logout/";
+    form.action = "http://127.0.0.1:8000/oidc/logout/";
     const csrfToken = document.cookie
       .split("; ")
       .find((r) => r.startsWith("csrftoken="))
@@ -100,6 +101,12 @@ export default function Dashboard() {
           </h2>
 
           <div>
+            <button
+              className="btn btn-primary btn-sm me-2"
+              onClick={() => setView("orders")} // Change this from 'cart' to 'orders'
+            >
+              My Orders
+            </button>
             <button
               className="btn btn-primary btn-sm me-2"
               onClick={() => setView("cart")}
@@ -144,14 +151,22 @@ export default function Dashboard() {
           </div>
 
           {/* Dynamic View Area */}
+          {/* Dynamic View Area */}
           <div className="col-md-9">
-            {view === "products" ? (
-              <div className="card shadow-sm p-4 border-0">
-                <h4 className="mb-4">Available Products</h4>
-                <Products onAddToCart={addToCart} />
-              </div>
-            ) : (
-              <div className="card shadow-sm p-4 border-0">
+            <div className="card shadow-sm p-4 border-0">
+              {/* CONDITIONAL RENDERING LOGIC */}
+
+              {view === "products" && (
+                <>
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                    <h4 className="mb-0">Available Products</h4>
+                    
+                  </div>
+                  <Products onAddToCart={addToCart} />
+                </>
+              )}
+
+              {view === "cart" && (
                 <CartView
                   cartItems={cart}
                   onRemove={removeFromCart}
@@ -159,8 +174,25 @@ export default function Dashboard() {
                   onCheckout={handleCheckout}
                   userBalance={user.account_balance}
                 />
-              </div>
-            )}
+              )}
+
+              {view === "orders" && (
+                <OrdersView onBack={() => setView("products")} />
+              )}
+
+              {/* EMPTY STATE (Safety Check) */}
+              {!["products", "cart", "orders"].includes(view) && (
+                <div className="text-center py-5">
+                  <p className="text-muted">View not found.</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setView("products")}
+                  >
+                    Return Home
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>
