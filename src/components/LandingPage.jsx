@@ -4,7 +4,8 @@ import React from "react";
 export default function LandingPage() {
   const handleLogin = () => {
     // Redirect to Django OIDC login
-    window.location.href = "http://127.0.0.1:8000/oidc/authenticate/";
+    window.location.href =
+      "https://customers-and-orders-api.onrender.com/oidc/authenticate/";
   };
 
   return (
@@ -50,7 +51,6 @@ export default function LandingPage() {
           Sign Up
         </button>
       </div>
-      
     </div>
   );
 }

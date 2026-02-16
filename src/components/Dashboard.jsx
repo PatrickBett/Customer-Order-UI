@@ -65,7 +65,7 @@ export default function Dashboard() {
   const handleLogout = () => {
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = "http://127.0.0.1:8000/oidc/logout/";
+    form.action = "https://customers-and-orders-api.onrender.com/oidc/logout/";
     const csrfToken = document.cookie
       .split("; ")
       .find((r) => r.startsWith("csrftoken="))
