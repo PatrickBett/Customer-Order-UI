@@ -39,11 +39,11 @@ export default function Dashboard() {
 
     try {
       const response = await api.post("/api/orders/", {
-        customer: user.id, // <--- ADD THIS LINE (The Missing Piece)
+        customer: user.id,
         items: cart.map((item) => ({
           product_title: item.title,
           price: item.price,
-          quantity: 1, // Explicitly set quantity
+          quantity: 1, // Explicitly sets the quantity
         })),
         total_price: totalAmount,
         phone_number: phoneNumber,
@@ -57,7 +57,7 @@ export default function Dashboard() {
         setUser(updatedUser.data);
       }
     } catch (err) {
-      // This will help you see EXACTLY what the backend is complaining about
+      // debugging line to see backend error details
       console.error("Backend Error Details:", err.response?.data);
       alert("Transaction failed. Check console for details.");
     }
@@ -66,7 +66,7 @@ export default function Dashboard() {
   const handleLogout = () => {
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = "http://127.0.0.1:8000/oidc/logout/";
+    form.action = "https://customers-and-orders-api.onrender.com/oidc/logout/";
     const csrfToken = document.cookie
       .split("; ")
       .find((r) => r.startsWith("csrftoken="))
@@ -160,7 +160,6 @@ export default function Dashboard() {
                 <>
                   <div className="d-flex justify-content-between align-items-center mb-4">
                     <h4 className="mb-0">Available Products</h4>
-                    
                   </div>
                   <Products onAddToCart={addToCart} />
                 </>
