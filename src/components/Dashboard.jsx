@@ -16,6 +16,7 @@ export default function Dashboard() {
       try {
         const res = await api.get("/api/current_user/");
         setUser(res.data);
+        console.log("Fetched user data:", res.data);
       } catch (err) {
         console.error("Error fetching user:", err);
       } finally {
